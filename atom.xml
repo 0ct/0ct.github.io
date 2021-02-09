@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://blog.decima.me</id>
+    <title>問</title>
+    <updated>2021-02-09T12:33:41.199Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://blog.decima.me"/>
+    <link rel="self" href="https://blog.decima.me/atom.xml"/>
+    <subtitle>I don&apos;t think God rested on the 7th day.</subtitle>
+    <logo>https://blog.decima.me/images/avatar.png</logo>
+    <icon>https://blog.decima.me/favicon.ico</icon>
+    <rights>All rights reserved 2021, 問</rights>
+    <entry>
+        <title type="html"><![CDATA[安装 Gitlab]]></title>
+        <id>https://blog.decima.me/post/How-to-Install-Gitlab/</id>
+        <link href="https://blog.decima.me/post/How-to-Install-Gitlab/">
+        </link>
+        <updated>2020-02-09T12:21:02.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="安装-gitlab">安装 Gitlab</h1>
+<h2 id="一-通过下载离线软件包安装-gitlab-ce">一、通过下载离线软件包安装 Gitlab-CE</h2>
+<h3 id="1-下载">1. 下载</h3>
+<ul>
+<li>从 <a href="https://tuna.moe/">清华源</a> 下载</li>
+</ul>
+<pre><code>https://mirrors.tuna.tsinghua.edu.cn/gitlab-ce/yum/el7/
+</code></pre>
+<ul>
+<li>其他地址
+<ul>
+<li>GitLab 官方：https://packages.gitlab.com/gitlab/gitlab-ce?filter=rpms</li>
+<li>浙大开源镜像站：http://mirrors.lifetoy.org/gitlab-ce/yum/el7/</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-安装">2. 安装</h3>
+<ul>
+<li>
+<p>通过 rpm 安装</p>
+<pre><code>rpm -ivh　gitlab-ce-13.8.3-ce.0.el7.x86_64.rpm
+</code></pre>
+</li>
+<li>
+<p>通过 yum 安装</p>
+<pre><code>gitlab-ce-13.8.3-ce.0.el7.x86_64.rpm
+</code></pre>
+</li>
+<li>
+<p>卸载</p>
+<ul>
+<li>
+<p>rpm 方式</p>
+<pre><code>rpm -e --nodeps gitlab-ce-8.9.6-ce.0.el7.x86_64
+</code></pre>
+</li>
+<li>
+<p>Yum 方式</p>
+<pre><code>yum remove gitlab
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-启动">3. 启动</h3>
+<ul>
+<li>修改 gitlab.rb</li>
+</ul>
+<pre><code>vim /etc/gitlab/gitlab.rc
+</code></pre>
+<ul>
+<li>
+<p>将<code>external_url</code> 修改为自己的机器的IP（此处举例为192.168.100.100）</p>
+<pre><code>external_url 'http://192.168.100.100'
+</code></pre>
+<p>或使用域名</p>
+<pre><code>external_url 'http://git.example.com'
+</code></pre>
+<ul>
+<li>修改hosts</li>
+</ul>
+<pre><code>vim /etc/hosts
+</code></pre>
+<p>添加</p>
+<pre><code>## 添加此行
+192.168.100.100 git.example.com
+## 保存
+:wq
+</code></pre>
+</li>
+<li>
+<p>reconfigure</p>
+<pre><code>gitlab-ctl reconfigure
+</code></pre>
+</li>
+<li>
+<p>重载完成后，打开浏览器输入 IP 即可打开 Gitlab 登录页面。</p>
+<pre><code>http://192.168.100.100
+</code></pre>
+</li>
+</ul>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[安装 Jira 和 Confluence：安装 Jira]]></title>
+        <id>https://blog.decima.me/post/How-to-Install-Jira/</id>
+        <link href="https://blog.decima.me/post/How-to-Install-Jira/">
+        </link>
+        <updated>2020-02-09T12:21:02.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="安装-jira-和-confluence安装-jira">安装 Jira 和 Confluence：安装 Jira</h1>
+<p>一、安装前准备</p>
+<h3 id="1-下载">1. 下载</h3>
+<ul>
+<li>
+<p>下载 <a href="https://www.atlassian.com/software/jira/download">jira</a> 和 <a href="https://www.atlassian.com/zh/software/confluence/download">confluence</a></p>
+<pre><code>https://product-downloads.atlassian.com/software/jira/downloads/atlassian-jira-software-8.13.3-x64.bin
+https://product-downloads.atlassian.com/software/confluence/downloads/atlassian-confluence-7.4.7-x64.bin
+</code></pre>
+</li>
+<li>
+<p>上传到机器上</p>
+</li>
+</ul>
+<h3 id="2-安装">2. 安装</h3>
+<ul>
+<li>
+<p>安装 MySQL</p>
+<p>使用 <a href="https://mirrors.tuna.tsinghua.edu.cn/help/mysql/">清华源</a></p>
+<pre><code>vim /etc/yum.repos.d/mysql-community.repo
+</code></pre>
+<p>复制以下内容</p>
+<pre><code>[mysql-5.7-community]
+name=MySQL 5.7 Community Server
+baseurl=https://mirrors.tuna.tsinghua.edu.cn/mysql/yum/mysql-5.7-community-el7-$basearch/
+enabled=1
+gpgcheck=1
+gpgkey=https://repo.mysql.com/RPM-GPG-KEY-mysql
+</code></pre>
+<p>更新安装</p>
+<pre><code>yum update
+yum install mysql-serve
+</code></pre>
+</li>
+<li>
+<p>启动</p>
+<pre><code>systemctl enable mysqld
+systemctl start mysqld
+</code></pre>
+<p>获取密码</p>
+<pre><code>cat /var/log/mysqld.log|grep 'A temporary password'
+</code></pre>
+<blockquote>
+<p>2021-02-09T09:16:49.130708Z 1 [Note] A temporary password is generated for root@localhost: <code>oeo+zO#vl1D%</code></p>
+<p>密码：oeo+zO#vl1D%</p>
+</blockquote>
+<pre><code>mysql -uroot -p
+## 输入密码，输入时不提示
+Enter password:
+</code></pre>
+</li>
+<li>
+<p>修改密码</p>
+<p>登录后需要先修改密码才能进行其他操作</p>
+<pre><code>mysql&gt; create database jira default character set utf8mb4 collate utf8mb4_general_ci;
+ERROR 1820 (HY000): You must reset your password using ALTER USER statement before executing this statement.
+mysql&gt; update user set password=PASSWORD(&quot;Admin&quot;) where user='root';
+ERROR 1046 (3D000): No database selected
+mysql&gt; show databases;
+ERROR 1820 (HY000): You must reset your password using ALTER USER statement before executing this statement.
+mysql&gt; use mysql
+ERROR 1820 (HY000): You must reset your password using ALTER USER statement before executing this statement.
+</code></pre>
+<p>使用 ALTER USER 修改密码</p>
+<pre><code>ALTER USER USER() IDENTIFIED BY 'Admin@123';
+</code></pre>
+</li>
+<li>
+<p>创建数据库</p>
+<p>创建 jira 和 confluence 数据库</p>
+<pre><code>CREATE DATABASE jira DEFAULT character SET utf8mb4 COLLATE utf8mb4_general_ci;
+CREATE DATABASE confluence DEFAULT character SET utf8mb4 COLLATE utf8mb4_general_ci;
+</code></pre>
+<p>修改密码用户密码</p>
+<pre><code>GRANT ALL ON jira.* TO 'jira' @ '%' IDENTIFIED BY 'Admin@123';
+GRANT ALL ON confluence.* TO 'confluence' @ '%' IDENTIFIED BY 'Admin@123';
+</code></pre>
+<p>查看数据库及用户</p>
+<pre><code>SELECT
+	USER,
+	host
+FROM
+	mysql.user;
+</code></pre>
+<pre><code>+---------------+-----------+
+| user          | host      |
++---------------+-----------+
+| confluence    | %         |
+| jira          | %         |
+| root          | %         |
+| mysql.session | localhost |
+| mysql.sys     | localhost |
++---------------+-----------+
+5 rows in set (0.00 sec)
+</code></pre>
+<pre><code>SHOW databases;
+</code></pre>
+<pre><code>+--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| confluence         |
+| jira               |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+6 rows in set (0.00 sec)
+</code></pre>
+<p>修改 <a href="https://confluence.atlassian.com/adminjiraserver0813/connecting-jira-applications-to-mysql-5-7-1027137456.html">my.cnf</a>，在 <code>[mysqld]</code>下添加</p>
+<pre><code>default-storage-engine=INNODB
+character_set_server=utf8mb4
+innodb_default_row_format=DYNAMIC
+innodb_large_prefix=ON
+innodb_file_format=Barracuda
+innodb_log_file_size=2G
+## 如果有这条，注释或删除
+// remove this if it exists
+sql_mode = NO_AUTO_VALUE_ON_ZERO
+</code></pre>
+<p>重启 mysql</p>
+<pre><code>systemctl restart mysqld
+</code></pre>
+</li>
+<li>
+<p>安装 jira</p>
+<p>创建文件夹</p>
+<pre><code>cd /usr/local
+mkdir jira
+cd jira
+mv ~/atlassian-jira-software-8.13.3-x64.bin .
+## 需要有执行权限
+chmod +x atlassian-jira-software-8.13.3-x64.bin 
+./atlassian-jira-software-8.13.3-x64.bin 
+</code></pre>
+<p>执行上一条 命令后出现以下提示</p>
+<pre><code>Unpacking JRE ...
+Starting Installer ...
+
+This will install Jira Software 8.13.3 on your computer.
+OK [o, Enter], Cancel [c]
+o ## 输入 o
+Click Next to continue, or Cancel to exit Setup.
+
+Choose the appropriate installation or upgrade option.
+Please choose one of the following:
+Express Install (use default settings) [1], Custom Install (recommended for advanced users) [2, Enter], Upgrade an existing Jira installation [3]
+1 ## 输入 1
+
+Details on where Jira Software will be installed and the settings that will be used.
+Installation Directory: /opt/atlassian/jira 
+Home Directory: /var/atlassian/application-data/jira 
+HTTP Port: 8080 
+RMI Port: 8005 
+Install as service: Yes 
+Install [i, Enter], Exit [e]
+i ## 输入 i
+
+Extracting files ...
+                                                                           
+
+Please wait a few moments while Jira Software is configured.
+
+Installation of Jira Software 8.13.3 is complete
+Start Jira Software 8.13.3 now?
+Yes [y, Enter], No [n]
+y ## 输入 y
+
+Please wait a few moments while Jira Software starts up.
+Launching Jira Software ...
+
+Installation of Jira Software 8.13.3 is complete
+Your installation of Jira Software 8.13.3 is now ready and can be accessed
+via your browser.
+Jira Software 8.13.3 can be accessed at http://localhost:8080
+Finishing installation ...
+</code></pre>
+<p>查看进程</p>
+<pre><code>[root@localhost local]# netstat -natlup
+Active Internet connections (servers and established)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name    
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      1041/sshd           
+tcp        0      0 127.0.0.1:25            0.0.0.0:*               LISTEN      1436/master         
+tcp        0      0 192.168.99.109:22       192.168.99.200:57061    ESTABLISHED 1545/sshd: root@not 
+tcp        0      0 192.168.99.109:22       192.168.99.200:57054    ESTABLISHED 1519/sshd: root@pts 
+tcp6       0      0 127.0.0.1:8005          :::*                    LISTEN      2080/java           
+tcp6       0      0 :::3306                 :::*                    LISTEN      1701/mysqld         
+tcp6       0      0 :::8080                 :::*                    LISTEN      2080/java           
+tcp6       0      0 :::22                   :::*                    LISTEN      1041/sshd           
+tcp6       0      0 ::1:25                  :::*                    LISTEN      1436/master 
+[root@localhost local]# ps -ef |grep jira
+jira      2080     1 40 17:46 ?        00:00:40 /opt/atlassian/jira/jre//bin/java -Djava.util.logging.config.file=/opt/atlassian/jira/conf/logging.properties -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager -Xms384m -Xmx2048m -XX:InitialCodeCacheSize=32m -XX:ReservedCodeCacheSize=512m -Djava.awt.headless=true -Datlassian.standalone=JIRA -Dorg.apache.jasper.runtime.BodyContentImpl.LIMIT_BUFFER=true -Dmail.mime.decodeparameters=true -Dorg.dom4j.factory=com.atlassian.core.xml.InterningDocumentFactory -XX:-OmitStackTraceInFastThrow -Djava.locale.providers=COMPAT -Datlassian.plugins.startup.options= -Djdk.tls.ephemeralDHKeySize=2048 -Djava.protocol.handler.pkgs=org.apache.catalina.webresources -Dorg.apache.catalina.security.SecurityListener.UMASK=0027 -Xloggc:/opt/atlassian/jira/logs/atlassian-jira-gc-%t.log -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=5 -XX:GCLogFileSize=20M -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -XX:+PrintGCCause -XX:+ExplicitGCInvokesConcurrent -Dignore.endorsed.dirs= -classpath /opt/atlassian/jira/bin/bootstrap.jar:/opt/atlassian/jira/bin/tomcat-juli.jar -Dcatalina.base=/opt/atlassian/jira -Dcatalina.home=/opt/atlassian/jira -Djava.io.tmpdir=/opt/atlassian/jira/temp org.apache.catalina.startup.Bootstrap start
+root      2188  1523  0 17:48 pts/0    00:00:00 grep --color=auto jira
+</code></pre>
+<ul>
+<li>
+<p>下载数据库连载工具</p>
+<p>来源：<a href="https://support.atlassian.com/">Administering Jira applications Support</a> - <a href="https://confluence.atlassian.com/adminjiraserver/supported-platforms-938846830.html">Supported platforms</a></p>
+<p><a href="https://dev.mysql.com/downloads/connector/j/5.1.html">MySQL Connector/J 5.1 driver</a></p>
+<p>下载 <code>Platform Independent (Architecture Independent), Compressed TAR Archive (mysql-connector-java-5.1.49.tar.gz)</code></p>
+<p>解压其中的<code>mysql-connector-java-5.1.49-bin.jar</code> 上传到机器 <code>~</code>下，然后复制到 jira 项目目录下</p>
+<pre><code>cp ~/mysql-connector-java-5.1.49-bin.jar atlassian/jira/atlassian-jira/WEB-INF/lib/
+</code></pre>
+</li>
+<li>
+<p>重启</p>
+</li>
+<li>
+<p>防火墙放行 及 重新加载</p>
+<pre><code>firewall-cmd --zone=public --add-port=8080/tcp --permanent
+firewall-cmd --reload
+
+## 查看
+firewall-cmd --zone=public --query-port=8080/tcp
+</code></pre>
+</li>
+<li>
+<p>重启服务</p>
+</li>
+</ul>
+<pre><code>cd /opt/atlassian/jira/bin
+sh shutdown.sh
+sh startup.sh
+</code></pre>
+<ul>
+<li>
+<p>登录网页继续安装</p>
+<pre><code>http://192.168.100.100:8080
+</code></pre>
+<ul>
+<li>
+<p>选择右上角的 Languages 可以将语言修改成 中文</p>
+</li>
+<li>
+<p>选择 第二个 我将设置我自己</p>
+</li>
+<li>
+<p>配置数据库，以此选择或填入</p>
+<blockquote>
+<ul>
+<li>其他数据库</li>
+<li>MySQL</li>
+<li>127.0.0.1</li>
+<li>192.168.100.100</li>
+<li>3306</li>
+<li>jira</li>
+<li>root</li>
+<li>Admin@123</li>
+</ul>
+</blockquote>
+</li>
+<li>
+<p>点击下一步</p>
+</li>
+<li>
+<p>设置应用程序的属性（此处默认或根据自己喜好修改）</p>
+</li>
+<li>
+<p>填入许可证</p>
+</li>
+<li>
+<p>设置管理员账号</p>
+<blockquote>
+<ul>
+<li>root</li>
+<li>root@admin.com</li>
+<li>root</li>
+<li>admin / admin</li>
+</ul>
+</blockquote>
+</li>
+<li>
+<p>设置电子邮件通知</p>
+<ul>
+<li>以后再说</li>
+</ul>
+</li>
+<li>
+<p>选择 中文(中国)[默认]</p>
+</li>
+<li>
+<p>选择头像</p>
+</li>
+<li>
+<p>开始体验 Jira</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+]]></content>
+    </entry>
+</feed>

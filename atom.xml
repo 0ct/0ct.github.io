@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://blog.decima.me</id>
     <title>問</title>
-    <updated>2021-02-09T13:04:36.907Z</updated>
+    <updated>2021-02-09T13:05:56.361Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://blog.decima.me"/>
     <link rel="self" href="https://blog.decima.me/atom.xml"/>
@@ -224,7 +224,7 @@ root      2188  1523  0 17:48 pts/0    00:00:00 grep --color=auto jira
 <p>解压其中的<code>mysql-connector-java-5.1.49-bin.jar</code> 上传到机器 <code>~</code>下，然后复制到 jira 项目目录下</p>
 </li>
 </ul>
-<pre><code>cp ~/mysql-connector-java-5.1.49-bin.jar atlassian/jira/atlassian-jira/WEB-INF/lib/
+<pre><code>cp ~/mysql-connector-java-5.1.49-bin.jar /opt/atlassian/jira/atlassian-jira/WEB-INF/lib/
 </code></pre>
 <ul>
 <li>
